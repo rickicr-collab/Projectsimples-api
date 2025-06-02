@@ -1,0 +1,8 @@
+   {
+    "recommendations":[
+        "vscjava.vscode-java-pack",
+        "orvmware.vscode-boot-dev-pack",
+        "orjaland.java-generate-setters-getters-update-equals",
+        "negokaz.live-server-preview"
+    ]
+   }
