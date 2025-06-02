@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ProjectSimplesApplication<ProjectSimples>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.RicardoRosendo.ProjectSimples.ProjectSimplesApplication",
+            "projectName": "ProjectSimples",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
