@@ -1,5 +1,7 @@
 package com.RicardoRosendo.ProjectSimples.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -45,7 +48,8 @@ public class Users {
     @Size(groups = { CreateUser.class, UpdateUser.class }, min = 6, max = 60)
     private String passWord;
 
-    // private List<Task> task = new ArrayList<Task>();
+    @OneToMany(mappedBy = "user")
+    private List<Task> task = new ArrayList<Task>();
 
     public Users() {
     }
@@ -79,6 +83,16 @@ public class Users {
     public void setPassWord(String passWord) {
         this.passWord = passWord;
     }
+
+
+    public List<Task> getTask() {
+        return this.task;
+    }
+
+    public void setTask(List<Task> task) {
+        this.task = task;
+    }
+
 
     @Override
     public boolean equals(Object obj) {
