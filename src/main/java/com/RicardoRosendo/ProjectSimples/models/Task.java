@@ -14,7 +14,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = Task.TABLE_NAME)
+@Table(name =Task.TABLE_NAME)
 public class Task {
 
     public static final String TABLE_NAME = "task";
@@ -26,7 +26,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
-    private Task user;
+    private Users user;
 
     @NotNull
     @NotEmpty
@@ -38,11 +38,12 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long id, Task user, String description) {
+    public Task(Long id, Users user, String description) {
         this.id = id;
         this.user = user;
         this.description = description;
     }
+
 
     public Long getId() {
         return this.id;
@@ -52,11 +53,10 @@ public class Task {
         this.id = id;
     }
 
-    public Task getUser() {
+    public Users getUser() {
         return this.user;
     }
-
-    public void setUser(Task user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 
@@ -67,21 +67,7 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Task id(Long id) {
-        setId(id);
-        return this;
-    }
-
-    public Task user(Task user) {
-        setUser(user);
-        return this;
-    }
-
-    public Task description(String description) {
-        setDescription(description);
-        return this;
-    }
+    
 
    
 
@@ -94,7 +80,7 @@ public class Task {
         if (!(obj instanceof Task)) {
             return false;
         }
-        Task other = (Task) obj;
+       Task other = (Task) obj;
         if (this.id == null) {
             if (other.id != null)
                 return false;
