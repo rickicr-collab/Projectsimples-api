@@ -44,7 +44,7 @@ public class UserService {
         try {
             this.delete(id);userRepository.deleteById(id);
         } catch (Exception e) {
-           throw new RuntimeException("Erro ao Deletar o usuário com id:" + id + "com tarefas relacionadas!");
+           throw new RuntimeException("Erro ao Deletar o usuário com id: " + id + " com tarefas relacionadas!");
         }
    }
 
