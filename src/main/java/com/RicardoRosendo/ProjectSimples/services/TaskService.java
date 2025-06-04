@@ -1,5 +1,7 @@
 package com.RicardoRosendo.ProjectSimples.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +20,8 @@ public class TaskService {
     private UserService userService;
 
     public Task findById(Long id) {
-        return taskRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Task not found with id: " + id + ", Class Type: " + Task.class.getName()));
+        Optional<Task> task = this.taskRepository.findById(id);
+        return task.orElseThrow(() -> new RuntimeException("Task not found with id: " + id + ", Class Type: " + Task.class.getName()));
     }
 
     @Transactional
