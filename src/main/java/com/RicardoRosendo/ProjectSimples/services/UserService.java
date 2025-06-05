@@ -24,7 +24,7 @@ public class UserService {
    @Transactional
    public Users create(Users obj){
         obj.setId(null);
-        obj =this.userRepository.save(obj);
+        obj = this.userRepository.save(obj);
         return obj;
    }
 
