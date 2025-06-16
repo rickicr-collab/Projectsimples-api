@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.RicardoRosendo.ProjectSimples.models.Task;
 import com.RicardoRosendo.ProjectSimples.models.Users;
 import com.RicardoRosendo.ProjectSimples.repositories.TaskRepository;
+import com.RicardoRosendo.ProjectSimples.services.exceptions.DataBindViolationException;
+import com.RicardoRosendo.ProjectSimples.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class TaskService {
@@ -22,7 +24,7 @@ public class TaskService {
 
     public Task findById(Long id) {
         Optional<Task> task = this.taskRepository.findById(id);
-        return task.orElseThrow(() -> new RuntimeException("Task not found with id: " + id + ", Class Type: " + Task.class.getName()));
+        return task.orElseThrow(() -> new ObjectNotFoundException("Tarefa não encontrada com Id : " + id + ", Class Type: " + Task.class.getName()));
     }
 
     public List<Task> findAllByUserId(Long UsersId){
@@ -51,7 +53,7 @@ public class TaskService {
         try {
             this.taskRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Error deleting task with id: " + id + " with related users!");
+            throw new DataBindViolationException("Não é possivel deletar a tarefa com id: " + id + " possui usuários relacionados!");
         }
     }
 

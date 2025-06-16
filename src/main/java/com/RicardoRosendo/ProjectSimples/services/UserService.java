@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.RicardoRosendo.ProjectSimples.models.Users;
 import com.RicardoRosendo.ProjectSimples.repositories.UserRepository;
+import com.RicardoRosendo.ProjectSimples.services.exceptions.DataBindViolationException;
+import com.RicardoRosendo.ProjectSimples.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -18,7 +20,7 @@ public class UserService {
 
    public Users findById(Long id){
         Optional<Users> user = this.userRepository.findById(id);
-        return user.orElseThrow(() -> new RuntimeException("User not found with id:"  + id + ", Class Type:" + Users.class.getName()));
+        return user.orElseThrow(() -> new ObjectNotFoundException("Usuario não Encontrado! id:"  + id + ", Class Type:" + Users.class.getName()));
    }
 
    @Transactional
@@ -41,7 +43,7 @@ public class UserService {
             this.delete(id);
             userRepository.deleteById(id);
         } catch (Exception e) {
-           throw new RuntimeException("Erro ao Deletar o usuário com id: " + id + " com tarefas relacionadas!");
+           throw new DataBindViolationException("Erro ao Deletar o usuário com id: " + id + " com tarefas relacionadas!");
         }
    }
 
