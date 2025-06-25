@@ -32,14 +32,14 @@ public class SecurityConfig {
         httpSecurity.authorizeRequests()
             .requestMatchers(PUBLIC_MATCHES).permitAll()
             .requestMatchers(HttpMethod.POST, PUBLIC_MATCHES_POST).permitAll()
-            .anyRequest().authenticated();
+            .anyRequest().authenticated();  
         return httpSecurity.build();
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
-        configuration.setAllowedMethods(Arrays.asList(null, "GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedMethods(Arrays.asList( "GET", "POST", "PUT", "DELETE"));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
