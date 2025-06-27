@@ -12,9 +12,11 @@ import com.RicardoRosendo.ProjectSimples.models.Enums.ProfileEnum;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
+@Setter
 public class UserSpringSecurity implements UserDetails {
 
     private Long id;
@@ -30,10 +32,10 @@ public class UserSpringSecurity implements UserDetails {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public String getUsername() {
-        throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
+        return userName;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -58,6 +60,8 @@ public class UserSpringSecurity implements UserDetails {
     public boolean hasRole(ProfileEnum profileEnum){
         return getAuthorities().contains(new SimpleGrantedAuthority(profileEnum.getDescription()));
     }
+
+
 
 
 
