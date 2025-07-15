@@ -20,6 +20,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.RicardoRosendo.ProjectSimples.Security.JWTAuthenticationFilter;
+import com.RicardoRosendo.ProjectSimples.Security.JWTAuthorizationFilter;
 import com.RicardoRosendo.ProjectSimples.Security.JWTUtil;
 
 @Configuration
@@ -60,7 +61,8 @@ public class SecurityConfig {
             .requestMatchers(PUBLIC_MATCHES).permitAll()
             .requestMatchers(HttpMethod.POST, PUBLIC_MATCHES_POST).permitAll()
             .anyRequest().authenticated().and().authenticationManager(authenticationManager);  
-        httpSecurity.addFilter(new JWTAuthenticationFilter(authenticationManager, jwtUtil));
+        httpSecurity.addFilter(new JWTAuthenticationFilter(authenticationManager, this.jwtUtil));
+        httpSecurity.addFilter(new JWTAuthorizationFilter(authenticationManager, this.jwtUtil, userDetailsService));
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return httpSecurity.build();
     }
