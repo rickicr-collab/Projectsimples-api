@@ -64,11 +64,11 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/users/{usersId}")
-    public ResponseEntity<List<Task>> findAllByUserID(@PathVariable Long usersId) {
-        userService.findById(usersId);
-        List<Task> tasks = this.taskService.findAllByUserId(usersId);
+    @GetMapping("/{users}")
+    public ResponseEntity<List<Task>> findAllByUser() {
+        List<Task> tasks = this.taskService.findAllByUser();
         return ResponseEntity.ok().body(tasks);
     }
+
 
 }

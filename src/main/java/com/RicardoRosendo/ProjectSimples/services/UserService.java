@@ -5,10 +5,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.RicardoRosendo.ProjectSimples.Security.UserSpringSecurity;
 import com.RicardoRosendo.ProjectSimples.models.Users;
 import com.RicardoRosendo.ProjectSimples.models.Enums.ProfileEnum;
 import com.RicardoRosendo.ProjectSimples.repositories.UserRepository;
@@ -60,5 +62,13 @@ public class UserService {
                          "Erro ao Deletar o usuário com id: " + id + " com tarefas relacionadas!");
           }
      }
+
+       public static UserSpringSecurity authenticated(){
+        try {
+            return (UserSpringSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {
+           return null;
+        }
+    }
 
 }
