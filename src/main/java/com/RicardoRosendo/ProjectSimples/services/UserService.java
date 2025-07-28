@@ -21,20 +21,18 @@ public class UserService {
      @Autowired
      private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-
-
-
      @Autowired
      private UserRepository userRepository;
 
+     
+ 
      public Users findById(Long id) {
           Optional<Users> user = this.userRepository.findById(id);
           return user.orElseThrow(() -> new ObjectNotFoundException(
                     "Usuario não Encontrado! id:" + id + ", Class Type:" + Users.class.getName()));
      }
 
-    
+   
      @Transactional
      public Users create(Users obj) {
           obj.setId(null);
