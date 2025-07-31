@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.RicardoRosendo.ProjectSimples.models.Task;
+import com.RicardoRosendo.ProjectSimples.models.Projection.TaskProjetion;
 import com.RicardoRosendo.ProjectSimples.services.TaskService;
 import com.RicardoRosendo.ProjectSimples.services.UserService;
 
@@ -64,9 +65,9 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{users}")
-    public ResponseEntity<List<Task>> findAllByUser() {
-        List<Task> tasks = this.taskService.findAllByUser();
+    @GetMapping("/users")
+    public ResponseEntity<List<TaskProjetion>> findAllByUser() {
+        List<TaskProjetion> tasks = this.taskService.findAllByUser();
         return ResponseEntity.ok().body(tasks);
     }
 

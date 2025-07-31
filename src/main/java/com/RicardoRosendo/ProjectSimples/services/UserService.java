@@ -12,10 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.RicardoRosendo.ProjectSimples.Security.UserSpringSecurity;
 import com.RicardoRosendo.ProjectSimples.models.Users;
+import com.RicardoRosendo.ProjectSimples.models.Dto.UserCreateDTO;
+import com.RicardoRosendo.ProjectSimples.models.Dto.UserUpdateDTO;
 import com.RicardoRosendo.ProjectSimples.models.Enums.ProfileEnum;
 import com.RicardoRosendo.ProjectSimples.repositories.UserRepository;
 import com.RicardoRosendo.ProjectSimples.services.exceptions.DataBindViolationException;
 import com.RicardoRosendo.ProjectSimples.services.exceptions.ObjectNotFoundException;
+
+import jakarta.validation.Valid;
 
 @Service
 public class UserService {
@@ -26,15 +30,12 @@ public class UserService {
      @Autowired
      private UserRepository userRepository;
 
-     
- 
      public Users findById(Long id) {
           Optional<Users> user = this.userRepository.findById(id);
           return user.orElseThrow(() -> new ObjectNotFoundException(
                     "Usuario não Encontrado! id:" + id + ", Class Type:" + Users.class.getName()));
      }
 
-   
      @Transactional
      public Users create(Users obj) {
           obj.setId(null);
@@ -63,12 +64,26 @@ public class UserService {
           }
      }
 
-       public static UserSpringSecurity authenticated(){
-        try {
-            return (UserSpringSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        } catch (Exception e) {
-           return null;
-        }
-    }
+     public static UserSpringSecurity authenticated() {
+          try {
+               return (UserSpringSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+          } catch (Exception e) {
+               return null;
+          }
+     }
+
+     public Users fromDTO(@Valid UserCreateDTO obj) {
+          Users user = new Users();
+          user.setUserName(obj.getUserName());
+          user.setPassWord(obj.getPassWord());
+          return user;
+     }
+
+     public Users fromDTO(@Valid UserUpdateDTO obj) {
+          Users user = new Users();
+          user.setId(obj.getId());
+          user.setPassWord(obj.getPassword());
+          return user;
+     }
 
 }

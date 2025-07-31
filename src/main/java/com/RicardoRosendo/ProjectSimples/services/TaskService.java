@@ -12,6 +12,7 @@ import com.RicardoRosendo.ProjectSimples.Security.UserSpringSecurity;
 import com.RicardoRosendo.ProjectSimples.models.Task;
 import com.RicardoRosendo.ProjectSimples.models.Users;
 import com.RicardoRosendo.ProjectSimples.models.Enums.ProfileEnum;
+import com.RicardoRosendo.ProjectSimples.models.Projection.TaskProjetion;
 import com.RicardoRosendo.ProjectSimples.repositories.TaskRepository;
 import com.RicardoRosendo.ProjectSimples.services.exceptions.DataBindViolationException;
 import com.RicardoRosendo.ProjectSimples.services.exceptions.ObjectNotFoundException;
@@ -38,12 +39,12 @@ public class TaskService {
         return task;
     }
 
-    public List<Task> findAllByUser() {
+    public List<TaskProjetion> findAllByUser() {
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
         if (Objects.isNull(userSpringSecurity)) {
             throw new AuthorizationDeniedException("Acesso Negado!");
         }
-        List<Task> tasks = this.taskRepository.findByUser_Id(userSpringSecurity.getId());
+        List<TaskProjetion> tasks = this.taskRepository.findByUser_Id(userSpringSecurity.getId());
         return tasks;
     }
 

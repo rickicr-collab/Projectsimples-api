@@ -105,7 +105,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
         Integer status = HttpStatus.UNAUTHORIZED.value();
-        String message = "email ou senha invalidos !";
+        String message = "Username or Password Are invalid !";
         response.setStatus(status);
         response.setContentType("application/json");
         ErrorResponse errorResponse = new ErrorResponse(status, message);
