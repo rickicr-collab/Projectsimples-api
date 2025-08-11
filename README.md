@@ -40,39 +40,44 @@ Utilizamos o Docker e o Docker Compose para facilitar a configuração e execuç
 ### docker-compose.yml
 
 ```yaml
-version: '3.8'
+version: "3.8"
+
 services:
-  mysql:
+  mysqldb:
     image: mysql:8.0
-    container_name: mysql-db
+    restart: unless-stopped
+    env_file: ./.env
+    container_name: mysqldb
     environment:
-      MYSQL_DATABASE: mydb
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQLDB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQLDB_DATABASE}
+      MYSQL_USER: ${MYSQLDB_USER}
+      MYSQL_PASSWORD: ${MYSQLDB_PASSWORD}
     ports:
-      - "3306:3306"
+      - "${MYSQLDB_LOCAL_PORT}:${MYSQLDB_DOCKER_PORT}"
     volumes:
-      - mysql_data:/var/lib/mysql
-
-  backend:
-    build: ./backend
-    container_name: spring-api
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/mydb
-      SPRING_DATASOURCE_USERNAME: usuario cadastrado do seu banco de dados instalado
-      SPRING_DATASOURCE_PASSWORD: senha cadstrada no banco de dados instalado 
+      - mysqldb_data:/var/lib/mysql
+  app:
     depends_on:
-      - mysql
-
-  frontend:
-    image: nginx:alpine
-    container_name: frontend-ui
-    volumes:
-      - ./frontend:/usr/share/nginx/html
+      - mysqldb
+    build:
+      context: ./
+      dockerfile: Dockerfile  
+    working_dir: /usr/src/projectsimplesapp
+    container_name: projectsimplesapp
+    restart: on-failure
+    env_file: ./.env
     ports:
-      - "8081:80"
+      - "${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/ProjectSimples
+      SPRING_DATASOURCE_USERNAME: ${MYSQLDB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQLDB_PASSWORD}
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
 
 volumes:
-  mysql_data:
+  mysqldb_data:
 
